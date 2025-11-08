@@ -13,7 +13,7 @@ import logging
 
 sys.path.append("..")
 from callback_logging import log_query_to_model, log_model_response
-from dotenv import load_dotenv
+from dotenv import load_doten
 import google.cloud.logging
 from google.adk import Agent
 from google.genai import types
@@ -40,6 +40,7 @@ attractions_planner = Agent(
         """,
     before_model_callback=log_query_to_model,
     after_model_callback=log_model_response,
+
     # When instructed to do so, paste the tools parameter below this line
 
     )
@@ -59,6 +60,8 @@ travel_brainstormer = Agent(
         """,
     before_model_callback=log_query_to_model,
     after_model_callback=log_model_response,
+    # before_model_callback=log_query_to_model,
+    # after_model_callback=log_model_response,
 )
 
 root_agent = Agent(
@@ -73,5 +76,5 @@ root_agent = Agent(
         temperature=0,
     ),
     # Add the sub_agents parameter when instructed below this line
-
+    sub_agents=[travel_brainstormer, attractions_planner]
 )
